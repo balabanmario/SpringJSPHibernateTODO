@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import spring.jsp.hibernate1.model.Tag;
 import spring.jsp.hibernate1.model.Todo;
 
 import java.util.Arrays;
@@ -51,6 +52,7 @@ public class FormController {
   }
 
 
+
   @RequestMapping(value = "/forms/anAction", method = RequestMethod.POST)
   public String  anAction2(@Validated @ModelAttribute("brandNew") Todo todo, Model model, BindingResult result) {
     log.info("POST anAction: " + todo);
@@ -83,23 +85,12 @@ public class FormController {
     );
   }
 
-//  @InitBinder
-//  public void initBinder(WebDataBinder binder) {
-////    binder.setRequiredFields("description");
-//    binder.setValidator(new TodoValidator());
-//  }
-
-   public class Tag {
-    private final String value;
-
-    public Tag(String val) {
-      this.value = val;
-    }
-
-    public String getValue() {
-      return value;
-    }
+  @InitBinder
+  public void initBinder(WebDataBinder binder) {
+//    binder.setRequiredFields("description");
+    binder.setValidator(new TodoValidator());
   }
+
 
   public class TodSearchCriteria {
     private long id;

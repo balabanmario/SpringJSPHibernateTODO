@@ -1,18 +1,20 @@
 package spring.jsp.hibernate1.web.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import spring.jsp.hibernate1.model.Inbox;
 
-@EnableWebMvc
+@EnableWebMvc // Enables @Controller, @RequestMapping, @NumberFormat, @DateTimeFormat
 @Configuration
 @ComponentScan(basePackages = "spring.jsp.hibernate1")
+@PropertySource("classpath:application.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
   public static final String RESOLVER_PREFIX = "/WEB-INF/view/";
@@ -31,6 +33,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
   }
-  // Non shown code
+
+  @Bean
+  @SessionScope
+  public Inbox inbox() {
+    return new Inbox();
+  }
+
 }
 
